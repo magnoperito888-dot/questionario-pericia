@@ -1309,7 +1309,7 @@
 (function () {
   'use strict';
 
-  const API_ENDPOINT = "SEU_GOOGLE_APPS_SCRIPT_ENDPOINT_AQUI";
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxewKSX7BGl7B1DygsBFAVrcgHxeGSe19UE2aa3hdWE7aPv98rtoxvjMH_3CzFPWM7X/exec";
 
   /* ── STATE ─────────────────────────────────────────── */
   let currentTab = 0;
@@ -1461,6 +1461,7 @@
     if (!tcleCheckbox.checked) {
       tcleError.classList.add('visible');
       tcleLabel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      alert('É necessário aceitar o Termo de Consentimento Livre e Esclarecido (TCLE) para prosseguir.');
       return false;
     }
     return true;
@@ -1640,25 +1641,21 @@
     const payload = buildPayload();
     console.log('[FURB Questionário] Payload:', JSON.stringify(payload, null, 2));
 
-    const isPlaceholder = API_ENDPOINT.includes('SEU_GOOGLE');
     submitBtn.textContent = 'Enviando...';
     submitBtn.disabled = true;
 
-    if (!isPlaceholder) {
-      try {
-        await fetch(API_ENDPOINT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      } catch (err) {
-        console.warn('[FURB Questionário] Fetch error (no-cors expected):', err);
-      }
-    } else {
-      console.info('[FURB Questionário] Endpoint placeholder detectado — fetch ignorado. Exibindo modal de sucesso.');
+    try {
+      await fetch(API_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.warn('[FURB Questionário] Fetch error:', err);
     }
 
+    // Exibe modal de sucesso independentemente do resultado do envio
     showModal();
   });
 
