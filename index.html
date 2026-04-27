@@ -1587,7 +1587,7 @@
     }
 
     function getRankOrder(groupId) {
-      const items = Array.from(document.querySelectorAll('[data-rank-group="' + groupId + '"]'));
+      const items = Array.from(document.querySelectorAll('.ranking-item[data-rank-group="' + groupId + '"]'));
       const arr = Array(4).fill('');
       items.forEach(function (item) {
         const sel = item.querySelector('select');
