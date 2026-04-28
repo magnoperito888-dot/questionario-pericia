@@ -1632,12 +1632,16 @@
   }
 
   /* ── SUBMIT ─────────────────────────────────────────── */
-  submitBtn.addEventListener('click', async function () {
-    if (!validateTcle()) return;
-    if (!validateTab0() || !validateTab1() || !validateTab2()) {
-      alert('Por favor, revise todas as seções antes de enviar. Verifique se há campos obrigatórios não preenchidos nas seções anteriores.');
-      return;
-    }
+   let enviando = false;
+   submitBtn.addEventListener('click', async function () {
+   if (enviando) return;
+    enviando = true;
+  
+  if (!validateTcle()) return;
+  if (!validateTab0() || !validateTab1() || !validateTab2()) {
+    alert('Por favor, revise todas as seções antes de enviar. Verifique se há campos o');
+    return;
+  }
     const payload = buildPayload();
     console.log('[FURB Questionário] Payload:', JSON.stringify(payload, null, 2));
 
