@@ -1647,6 +1647,7 @@
     try {
      await fetch(API_ENDPOINT, {
   method: 'POST',
+  redirect: 'follow',
   body: JSON.stringify(payload)
 });
     } catch (err) {
