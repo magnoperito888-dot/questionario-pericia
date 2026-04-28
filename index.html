@@ -1309,7 +1309,7 @@
 (function () {
   'use strict';
 
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbwJUw0UcIK3BQTNg8RTrMw0LqFVSCaF82SoG571CQigrxGbYie5vI9HYoZdVNmBiKMH/exec";
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxseMRqClHpW8ESnKhwchIsigeCYwYAVkhW_J-CihWNeaL2G3501P0MlbHNZ_dc34hQ/exec";
 
   /* ── STATE ─────────────────────────────────────────── */
   let currentTab = 0;
@@ -1645,10 +1645,30 @@
     submitBtn.disabled = true;
 
     try {
-     await fetch(API_ENDPOINT, {
-  method: 'POST',
-  redirect: 'follow',
-  body: JSON.stringify(payload)
+    const params = new URLSearchParams({
+  genero: payload.parte1_perfil.genero,
+  idade: payload.parte1_perfil.idade,
+  experiencia_anos: payload.parte1_perfil.experiencia_anos,
+  formacao: payload.parte1_perfil.formacao,
+  estado_uf: payload.parte1_perfil.estado_uf,
+  cidade: payload.parte1_perfil.cidade,
+  p1: payload.parte2_percepcao.p1_erros_calculo,
+  p2: payload.parte2_percepcao.p2_omissoes,
+  p3: payload.parte2_percepcao.p3_obscuridades,
+  p4: payload.parte2_percepcao.p4_contradicoes,
+  p5: payload.parte2_percepcao.p5_clareza,
+  p6: payload.parte2_percepcao.p6_intervencao_juizo,
+  p7: payload.parte2_percepcao.p7_laudo_conclusivo,
+  verbas: Array.isArray(payload.parte3_analise.verbas_recorrentes) ? payload.parte3_analise.verbas_recorrentes.join(" | ") : payload.parte3_analise.verbas_recorrentes,
+  padroes: (payload.parte3_analise.padroes_frequencia || []).join(" | "),
+  insuficiencias: (payload.parte3_analise.insuficiencias || []).join(" | "),
+  q1: payload.parte4_abertas.assistentes_tecnicos || "",
+  q2: payload.parte4_abertas.relevancia_pericial || ""
+});
+
+await fetch(`${API_ENDPOINT}?${params.toString()}`, {
+  method: 'GET',
+  mode: 'no-cors'
 });
     } catch (err) {
       console.warn('[FURB Questionário] Fetch error:', err);
