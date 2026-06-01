@@ -1287,6 +1287,20 @@
   </div>
 </footer>
 
+<!-- ═══════════════════════════ TELA AGRADECIMENTO ═══════════════════════ -->
+<div id="thanks-screen" style="display:none; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; padding:40px 20px; text-align:center;">
+  <div style="background:#fff; border-radius:16px; padding:48px 40px; max-width:560px; box-shadow:0 4px 24px rgba(0,0,0,0.10);">
+    <div style="font-size:3rem; margin-bottom:16px;">✅</div>
+    <h2 style="color:#1a3a5c; font-size:1.6rem; margin-bottom:12px;">Respostas Registradas!</h2>
+    <p style="color:#4a5a6a; font-size:1rem; line-height:1.6; margin-bottom:8px;">Muito obrigado pela sua valiosa contribuição a esta pesquisa.</p>
+    <p style="color:#4a5a6a; font-size:0.95rem; line-height:1.6;">Suas respostas foram registradas de forma anônima e serão utilizadas exclusivamente para fins acadêmicos, em conformidade com a LGPD.</p>
+    <div style="margin-top:24px; padding:16px; background:#f0f7ff; border-radius:8px;">
+      <p style="color:#1a3a5c; font-size:0.9rem; font-weight:600;">Pesquisa: Padrões de Insurgências nos Laudos Periciais Contábeis</p>
+      <p style="color:#4a5a6a; font-size:0.85rem; margin-top:4px;">FURB – Universidade Regional de Blumenau</p>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════ MODAL ════════════════════════════════ -->
 <div class="modal-overlay" id="success-modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading" aria-describedby="modal-desc">
   <div class="modal-card">
@@ -1309,7 +1323,7 @@
 (function () {
   'use strict';
 
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxewKSX7BGl7B1DygsBFAVrcgHxeGSe19UE2aa3hdWE7aPv98rtoxvjMH_3CzFPWM7X/exec";
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxseMRqClHpW8ESnKhwchIsigeCYwYAVkhW_J-CihWNeaL2G3501P0MlbHNZ_dc34hQ/exec";
 
   /* ── STATE ─────────────────────────────────────────── */
   let currentTab = 0;
@@ -1717,8 +1731,11 @@
     clearInterval(countdownTimer);
     modal.classList.remove('open');
     document.body.style.overflow = '';
-    submitBtn.textContent = '✓ Enviar Respostas';
-    submitBtn.disabled = false;
+    // Oculta o formulário e exibe tela de agradecimento
+    document.querySelector('.tabs-section') && (document.querySelector('.tabs-section').style.display = 'none');
+    document.querySelector('.nav-buttons') && (document.querySelector('.nav-buttons').style.display = 'none');
+    var thanks = document.getElementById('thanks-screen');
+    if (thanks) thanks.style.display = 'flex';
   }
 
   modalClose.addEventListener('click', closeModal);
